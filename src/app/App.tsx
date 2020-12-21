@@ -3,26 +3,21 @@ import './App.css';
 import Board from 'features/board/Board';
 import { isValidSudoku, solveSudoku, InvalidInfo } from 'utils/Sudoku';
 
-const emptyBoard = function (): string[][] {
+const emptyPuzzle = function (): string[][] {
   return Array(9)
     .fill(null)
     .map((ele) => Array(9).fill(''));
 };
-const emptySolvedMark = function (): boolean[][] {
-  return Array(9)
-    .fill(null)
-    .map((ele) => Array(9).fill(false));
-};
-const testBoard: string[][] = [
-  ['1', '5', '4', '7', '2', '6', '8', '9', '3'],
-  ['7', '9', '8', '1', '5', '3', '6', '2', '4'],
-  ['6', '2', '3', '4', '9', '8', '1', '7', '5'],
-  ['5', '6', '1', '3', '4', '7', '2', '8', '9'],
-  ['4', '7', '2', '8', '6', '9', '3', '5', '1'],
-  ['3', '8', '9', '5', '1', '2', '7', '4', '6'],
-  ['8', '4', '5', '2', '3', '1', '9', '6', '7'],
-  ['2', '3', '6', '9', '7', '4', '5', '1', '8'],
-  ['9', '1', '7', '6', '8', '5', '4', '3', '2']
+const testPuzzle: string[][] = [
+  ['5', '3', '', '', '7', '', '', '', ''],
+  ['6', '', '', '1', '9', '5', '', '', ''],
+  ['', '9', '8', '', '', '', '', '6', ''],
+  ['8', '', '', '', '6', '', '', '', '3'],
+  ['4', '', '', '8', '', '3', '', '', '1'],
+  ['7', '', '', '', '2', '', '', '', '6'],
+  ['', '6', '', '', '', '', '2', '8', ''],
+  ['', '', '', '4', '1', '9', '', '', '5'],
+  ['', '', '', '', '8', '', '', '7', '9']
 ];
 
 function isNumberValid(val: string): boolean {
@@ -36,22 +31,14 @@ function isNumberValid(val: string): boolean {
 }
 
 const App: React.FC = () => {
-  let [input, setInput] = useState(emptyBoard);
-  let [board, setBoard] = useState(testBoard);
+  let [history, setHistory] = useState<string[][][]>([]);
+  let [puzzle, setPuzzle] = useState(testPuzzle);
+  let [board, setBoard] = useState(testPuzzle);
   let [checkResult, setCheckResult] = useState('');
   let [invalidInfo, setInvalid] = useState<InvalidInfo | null>(null);
-  let [solvedMarks, setSolvedMark] = useState(emptySolvedMark);
-  function onTextChange(row: number, col: number, newVal: string) {
-    if (isNumberValid(newVal)) {
-      let newInput = input.map((arr) => arr.slice());
-      newInput[row][col] = newVal;
-      setInput(newInput);
-      setBoard(newInput);
-    }
-  }
 
   function checkIsValid(): boolean {
-    const VALID_HINT = 'Valid input:)';
+    const VALID_HINT = 'The board is valid:)';
     const INVALID_HINT = 'You have made some mistakes, highlighted in red!';
     const invalidInfo = isValidSudoku(board);
     setCheckResult(invalidInfo ? INVALID_HINT : VALID_HINT);
@@ -59,51 +46,88 @@ const App: React.FC = () => {
     return invalidInfo === null;
   }
 
+  function _resetCheckInfo() {
+    if (invalidInfo !== null) {
+      setInvalid(null);
+    }
+    if (checkResult !== '') {
+      setCheckResult('');
+    }
+  }
+
   function reset() {
-    setCheckResult('');
-    setInvalid(null);
-    setInput(emptyBoard);
-    setBoard(emptyBoard);
-    setSolvedMark(emptySolvedMark);
+    _resetCheckInfo();
+    setPuzzle(emptyPuzzle);
+    setBoard(emptyPuzzle);
+  }
+
+  function onTextChange(row: number, col: number, newVal: string) {
+    if (isNumberValid(newVal)) {
+      _resetCheckInfo();
+      let newInput = puzzle.map((arr) => arr.slice());
+      newInput[row][col] = newVal;
+      setPuzzle(newInput);
+      setBoard(newInput);
+    }
   }
 
   function solve() {
     if (checkIsValid()) {
-      let newSolvedMark = solvedMarks.map((arr) => arr.slice());
-      for (let i = 0; i < 9; i++) {
-        for (let j = 0; j < 9; j++) {
-          newSolvedMark[i][j] = input[i][j] === '';
-        }
-      }
-      let newOutput = solveSudoku(board);
+      let newOutput = solveSudoku(puzzle);
       if (newOutput === null) {
         setCheckResult('Sorry! I have no solution!');
         return;
       }
       setBoard(newOutput);
-      setSolvedMark(newSolvedMark);
     }
+  }
+
+  function jumpTo(index: number) {
+    _resetCheckInfo();
+    setPuzzle(history[index]);
+    setBoard(history[index]);
+  }
+
+  function save() {
+    setHistory([...history, puzzle.map((arr) => arr.slice())]);
   }
 
   let hintClass = 'hint-txt';
   if (invalidInfo) {
     hintClass += ' invalid-hint';
   }
+  let puzzles = history.map((val, index) => {
+    const desc = `Go to previous puzzle #${index}`;
+    return (
+      <li key={index}>
+        <button onClick={() => jumpTo(index)}>{desc}</button>
+      </li>
+    );
+  });
+
   let content = (
     <>
-      <Board
-        squares={board}
-        solvedMarks={solvedMarks}
-        onTextChange={onTextChange}
-        invalidInfo={invalidInfo}
-      />
-      <button onClick={() => checkIsValid()}>Check is valid</button>
-      <p className={hintClass}>{checkResult}</p>
-      <button onClick={() => reset()}>Reset</button>
-      <button onClick={() => solve()}>Solve</button>
+      <div className="game-board">
+        <Board
+          board={board}
+          puzzle={puzzle}
+          onTextChange={onTextChange}
+          invalidInfo={invalidInfo}
+        />
+        <br />
+        <button onClick={() => checkIsValid()}>Check is valid</button>
+        <button onClick={() => reset()}>Reset</button>
+        <button onClick={() => solve()}>Solve</button>
+        <button onClick={() => save()}>Save</button>
+        <p className={hintClass}>{checkResult}</p>
+      </div>
+      <div className="game-info">
+        <p>History:</p>
+        {puzzles.length === 0 ? <p>No saved history</p> : <ol>{puzzles}</ol>}
+      </div>
     </>
   );
-  return <div className="App">{content}</div>;
+  return <div className="game">{content}</div>;
 };
 
 export default App;

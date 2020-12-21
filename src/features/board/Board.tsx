@@ -9,9 +9,9 @@ function Board(props) {
         row={row}
         col={col}
         invalidInfo={props.invalidInfo}
-        solved={props.solvedMarks[row][col]}
+        solved={props.puzzle[row][col] !== props.board[row][col]}
         onTextChange={props.onTextChange}
-        value={props.squares[row][col]}
+        value={props.board[row][col]}
       />
     );
   }

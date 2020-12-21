@@ -1,4 +1,4 @@
-.App {
+.game {
   max-width: 768px;
   margin: 0 auto;
   padding: 1rem;
@@ -11,9 +11,9 @@
 }
 
 .square {
-  font-family: 'lucida handwriting', 'comic sans ms', sans-serif;
-  color: #7777dd;
-  font-size: 22px;
+  font-family: times, 'times new roman', serif;
+  color: #000000;
+  font-size: 25px;
   background: #fff;
   border: #ddddee solid 1px;
   float: left;
@@ -58,7 +58,16 @@
 }
 
 input:read-only {
-  font-family: times, 'times new roman', serif;
-  color: #000000;
-  font-size: 25px;
+  font-family: 'lucida handwriting', 'comic sans ms', sans-serif;
+  color: #7777dd;
+  font-size: 22px;
+}
+
+.game {
+  display: flex;
+  flex-direction: row;
+}
+
+.game-info {
+  margin-left: 20px;
 }
