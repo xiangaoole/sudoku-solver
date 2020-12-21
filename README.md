@@ -4,6 +4,8 @@ Tags: `React` `JavaScript`
 
 This solver provides you a solution of any sudoku puzzle you input if solutionale.
 
+![demo](demo.gif)
+
 1. **Check**: Check if the input is a valid sudoku puzzle. If not, the wrong row, column or block is hinted.
 2. **Solve**: If a valid sudoku puzzle is entered, a solution will be given.
 3. **Save**: Save the current puzzle to a temporary history.
