@@ -8,7 +8,7 @@ We provide a solver to give you the answer of the sudoku game.
 2. Solve: After enter part of valid puzzle, give the solution to the sudoku puzzle.
 3. History: Auto save recent 10 puzzle and its solution.
 
-You visit in the [codesandbox](https://codesandbox.io/s/sudoku-ol32y).
+You visit in the [codesandbox](https://codesandbox.io/s/github/xiangaoole/sudoku-solver/tree/main).
 
 ## Acknowledgement
 
