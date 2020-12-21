@@ -38,7 +38,7 @@ const App: React.FC = () => {
   let [invalidInfo, setInvalid] = useState<InvalidInfo | null>(null);
 
   function checkIsValid(): boolean {
-    const VALID_HINT = 'The board is valid:)';
+    const VALID_HINT = 'The board is valid :)';
     const INVALID_HINT = 'You have made some mistakes, highlighted in red!';
     const invalidInfo = isValidSudoku(board);
     setCheckResult(invalidInfo ? INVALID_HINT : VALID_HINT);
@@ -89,7 +89,9 @@ const App: React.FC = () => {
   }
 
   function save() {
-    setHistory([...history, puzzle.map((arr) => arr.slice())]);
+    if (checkIsValid()) {
+      setHistory([...history, puzzle.map((arr) => arr.slice())]);
+    }
   }
 
   let hintClass = 'hint-txt';
@@ -97,7 +99,7 @@ const App: React.FC = () => {
     hintClass += ' invalid-hint';
   }
   let puzzles = history.map((val, index) => {
-    const desc = `Go to previous puzzle #${index}`;
+    const desc = `Go to saved puzzle #${index + 1}`;
     return (
       <li key={index}>
         <button onClick={() => jumpTo(index)}>{desc}</button>
@@ -115,13 +117,13 @@ const App: React.FC = () => {
           invalidInfo={invalidInfo}
         />
         <br />
-        <button onClick={() => checkIsValid()}>Check is valid</button>
+        <button onClick={() => checkIsValid()}>Check</button>
         <button onClick={() => reset()}>Reset</button>
         <button onClick={() => solve()}>Solve</button>
         <button onClick={() => save()}>Save</button>
-        <p className={hintClass}>{checkResult}</p>
+        {checkResult.length > 0 && <p className={hintClass}>{checkResult}</p>}
       </div>
-      <div className="game-info">
+      <div className="game-history">
         <p>History:</p>
         {puzzles.length === 0 ? <p>No saved history</p> : <ol>{puzzles}</ol>}
       </div>

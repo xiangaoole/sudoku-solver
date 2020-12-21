@@ -53,8 +53,21 @@
   background-color: #ff3f3f;
 }
 
-.invalid-hint {
-  color: #ff0000;
+.hint-txt {
+  max-width: 330px;
+  box-sizing: border-box;
+  color: black;
+  padding: 5px;
+  background-color: #cae8ca;
+  border: 2px solid #4caf50;
+}
+
+.hint-txt.invalid-hint {
+  /* color: #ff0000; */
+  color: black;
+  padding: 5px;
+  background-color: #fdd;
+  border: 2px solid #900;
 }
 
 input:read-only {
@@ -63,11 +76,17 @@ input:read-only {
   font-size: 22px;
 }
 
-.game {
-  display: flex;
-  flex-direction: row;
+.game-board {
+  min-width: 330px;
 }
 
-.game-info {
-  margin-left: 20px;
+@media screen and (min-width: 500px) {
+  .game {
+    display: flex;
+  }
+
+  .game-history {
+    margin-left: 20px;
+    flex: 1;
+  }
 }
