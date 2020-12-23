@@ -12,17 +12,9 @@ This solver provides you a solution of any sudoku puzzle you input if solutional
 
 You can visit [the codesandbox page](https://codesandbox.io/s/github/xiangaoole/sudoku-solver/tree/main) to see this project's preview or to edit the source code.
 
-<iframe src="https://codesandbox.io/embed/sudoku-solver-dev-vdg34?fontsize=14&hidenavigation=1&theme=dark&view=preview"
-     style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
-     title="sudoku-solver-dev"
-     allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-   ></iframe>
-
 There is also a [React Native version in expo](https://snack.expo.io/@harold-gao/sudoku-solver-react-native).
 
-<div data-snack-id="@harold-gao/sudoku-solver-react-native" data-snack-platform="web" data-snack-preview="true" data-snack-theme="dark" style="overflow:hidden;background:#212121;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%"></div>
-<script async src="https://snack.expo.io/embed.js"></script>
+![demo of React Native version in iOS](demo-react-native-ios.jpeg)
 
 ## Acknowledgement
 
