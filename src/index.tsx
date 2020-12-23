@@ -1,21 +1,21 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import './index.css'
+import './index.css';
 
 const render = () => {
-  const App = require('./app/App').default
+  const App = require('./app/App').default;
 
   ReactDOM.render(
     // <Provider store={store}>
     <App />,
     // </Provider>
     document.getElementById('root')
-  )
-}
+  );
+};
 
-render()
+render();
 
 if (process.env.NODE_ENV === 'develepment' && module.hot) {
-  module.hot.accept('./app/App', render)
+  module.hot.accept('./app/App', render);
 }
