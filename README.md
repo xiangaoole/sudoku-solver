@@ -14,7 +14,7 @@ You can visit [the codesandbox page](https://codesandbox.io/s/github/xiangaoole/
 
 There is also a [React Native version in expo](https://snack.expo.io/@harold-gao/sudoku-solver-react-native).
 
-![demo of React Native version in iOS](demo-react-native-ios.jpeg)
+<img src="demo-react-native-ios.jpeg" alt="demo of React Native version on iPhone X" height=500px/>
 
 ## Acknowledgement
 
